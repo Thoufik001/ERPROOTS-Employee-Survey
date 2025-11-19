@@ -378,102 +378,87 @@
 <body>
 
     <!-- Login Screen -->
-    <div id="login-screen">
-        <div class="login-card">
-            <div style="margin-bottom: 20px; font-size: 3rem;">🔐</div>
-            <h2 class="login-title">Admin Access</h2>
-            <p class="login-subtitle">Enter your secure password to continue</p>
-            <input type="password" id="passwordInput" class="login-input" placeholder="Enter Password">
-            <button onclick="checkPassword()" class="btn" style="width: 100%; padding: 16px;">Login to
-                Dashboard</button>
-            <p id="loginError" style="color: #EF4444; margin-top: 15px; display: none; font-weight: 500;">Incorrect
-                password. Please try again.</p>
+    <header>
+        <div>
+            <h1 style="display: flex; align-items: center; gap: 10px;">
+                ERPROOTS Survey
+                <span
+                    style="font-size: 0.8rem; background: #DEF7EC; color: #03543F; padding: 4px 10px; border-radius: 20px; font-weight: 600;">Admin</span>
+            </h1>
+            <p class="header-subtitle">Overview of employee satisfaction and feedback</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <button onclick="exportCSV()" class="btn btn-outline">
+                <span style="font-size: 1.2rem;">📥</span> Export CSV
+            </button>
+            <button onclick="logout()" class="btn btn-danger">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Responses</div>
+            <div class="stat-value" id="totalResponses">-</div>
+            <div style="color: var(--success); font-size: 0.9rem; font-weight: 500;">↑ All time</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Avg Satisfaction (Q1)</div>
+            <div class="stat-value" id="avgSat">-</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Out of 5.0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Team Morale</div>
+            <div class="stat-value" id="teamMorale">-</div>
+            <div style="color: var(--accent); font-size: 0.9rem;">High / Very High</div>
         </div>
     </div>
 
-    <!-- Dashboard -->
-    <div id="dashboard" class="hidden">
-        <header>
-            <div>
-                <h1 style="display: flex; align-items: center; gap: 10px;">
-                    ERPROOTS Survey
-                    <span
-                        style="font-size: 0.8rem; background: #DEF7EC; color: #03543F; padding: 4px 10px; border-radius: 20px; font-weight: 600;">Admin</span>
-                </h1>
-                <p class="header-subtitle">Overview of employee satisfaction and feedback</p>
-            </div>
-            <div style="display: flex; gap: 12px;">
-                <button onclick="exportCSV()" class="btn btn-outline">
-                    <span style="font-size: 1.2rem;">📥</span> Export CSV
-                </button>
-                <button onclick="logout()" class="btn btn-danger">
-                    Logout
-                </button>
-            </div>
-        </header>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Responses</div>
-                <div class="stat-value" id="totalResponses">-</div>
-                <div style="color: var(--success); font-size: 0.9rem; font-weight: 500;">↑ All time</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Avg Satisfaction (Q1)</div>
-                <div class="stat-value" id="avgSat">-</div>
-                <div style="color: var(--text-muted); font-size: 0.9rem;">Out of 5.0</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Team Morale</div>
-                <div class="stat-value" id="teamMorale">-</div>
-                <div style="color: var(--accent); font-size: 0.9rem;">High / Very High</div>
+    <!-- AI Insights -->
+    <div class="ai-section">
+        <div class="ai-header">
+            <h2 style="margin: 0; display: flex; align-items: center; font-size: 1.2rem; color: var(--primary);">
+                ✨ AI Executive Summary
+                <span class="ai-badge">Gemini Pro</span>
+            </h2>
+            <button onclick="generateInsights()" id="aiBtn" class="btn"
+                style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none;">
+                Generate Report
+            </button>
+        </div>
+        <div id="aiContent" class="ai-content">
+            <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🤖</div>
+                Click "Generate Report" to analyze all survey responses.<br>
+                Gemini will identify top pain points, key themes, and action items.
             </div>
         </div>
+    </div>
 
-        <!-- AI Insights -->
-        <div class="ai-section">
-            <div class="ai-header">
-                <h2 style="margin: 0; display: flex; align-items: center; font-size: 1.2rem; color: var(--primary);">
-                    ✨ AI Executive Summary
-                    <span class="ai-badge">Gemini Pro</span>
-                </h2>
-                <button onclick="generateInsights()" id="aiBtn" class="btn"
-                    style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none;">
-                    Generate Report
-                </button>
-            </div>
-            <div id="aiContent" class="ai-content">
-                <div style="text-align: center; color: var(--text-muted); padding: 20px;">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">🤖</div>
-                    Click "Generate Report" to analyze all survey responses.<br>
-                    Gemini will identify top pain points, key themes, and action items.
-                </div>
-            </div>
+    <!-- Data Table -->
+    <div class="table-container">
+        <div class="table-header-row">
+            <h3 style="margin: 0; color: var(--primary);">Recent Submissions</h3>
         </div>
-
-        <!-- Data Table -->
-        <div class="table-container">
-            <div class="table-header-row">
-                <h3 style="margin: 0; color: var(--primary);">Recent Submissions</h3>
-            </div>
-            <div style="overflow-x: auto;">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Role Sat (Q1)</th>
-                            <th>Valued (Q2)</th>
-                            <th>Workload (Q21)</th>
-                            <th>Challenges (Q37)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- Rows injected here -->
-                    </tbody>
-                </table>
-            </div>
+        <div style="overflow-x: auto;">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Role Sat (Q1)</th>
+                        <th>Valued (Q2)</th>
+                        <th>Workload (Q21)</th>
+                        <th>Challenges (Q37)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows injected here -->
+                </tbody>
+            </table>
         </div>
+    </div>
     </div>
 
     <script type="module">
@@ -483,63 +468,21 @@
         const SUPABASE_URL = 'https://zmhybyixdtjqvdoowbsz.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_JmdU1P8oSj1VMYtV7rLdqg_JBJL29Lw';
         const GEMINI_KEY = 'AIzaSyDa5zUB4OS9Jndr7oJ7Sil4IGUhB64yYKQ';
-        const APP_PASSWORD = 'Erproots@2017';
+        if (!allResponses.length) return;
 
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        let allResponses = [];
+        const headers = Object.keys(allResponses[0]);
+        const csvContent = [
+            headers.join(','),
+            ...allResponses.map(row => headers.map(fieldName =>
+                JSON.stringify(row[fieldName] || '') // Handle commas in text
+            ).join(','))
+        ].join('\n');
 
-        // Global functions for HTML access
-        window.checkPassword = function () {
-            const input = document.getElementById('passwordInput').value;
-            const btn = document.querySelector('button[onclick="checkPassword()"]');
-            const errorMsg = document.getElementById('loginError');
-            const card = document.querySelector('.login-card');
-
-            // Reset state
-            errorMsg.style.display = 'none';
-            btn.disabled = true;
-            btn.innerHTML = '<span class="loading-spinner"></span> Verifying...';
-
-            // Small delay to show interaction
-            setTimeout(() => {
-                if (input === APP_PASSWORD) {
-                    document.getElementById('login-screen').classList.add('hidden');
-                    document.getElementById('dashboard').classList.remove('hidden');
-                    loadData();
-                } else {
-                    errorMsg.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerHTML = 'Login to Dashboard';
-
-                    // Shake animation for error
-                    card.style.animation = 'none';
-                    card.offsetHeight; /* trigger reflow */
-                    card.style.animation = 'shake 0.5s';
-                    setTimeout(() => card.style.animation = 'float 6s ease-in-out infinite', 500);
-                }
-            }, 800);
-        }
-
-        window.logout = function () {
-            location.reload();
-        }
-
-        window.exportCSV = function () {
-            if (!allResponses.length) return;
-
-            const headers = Object.keys(allResponses[0]);
-            const csvContent = [
-                headers.join(','),
-                ...allResponses.map(row => headers.map(fieldName =>
-                    JSON.stringify(row[fieldName] || '') // Handle commas in text
-                ).join(','))
-            ].join('\n');
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `survey_export_${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `survey_export_${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
         }
 
         window.generateInsights = async function () {

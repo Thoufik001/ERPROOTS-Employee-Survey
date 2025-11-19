@@ -4,38 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERPROOTS - Employee Satisfaction Survey</title>
+    <title>ERPROOTS Employee Satisfaction Survey</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #FCFCF9;
-            --text-color: #333;
-            --primary-color: #21808D;
+            --primary: #0F172A;
+            --accent: #2563EB;
+            --bg-color: #F1F5F9;
             --card-bg: #FFFFFF;
-            --border-color: #E0E0E0;
-            --error-color: #D32F2F;
-            --success-color: #21808D;
-            --input-bg: #FFFFFF;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #1F2121;
-                --text-color: #E0E0E0;
-                --primary-color: #32B8C6;
-                --card-bg: #2C2E2E;
-                --border-color: #444;
-                --input-bg: #3A3C3C;
-            }
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --error: #EF4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
+            line-height: 1.6;
             margin: 0;
             padding: 20px;
-            line-height: 1.6;
         }
 
         .container {
@@ -43,136 +36,206 @@
             margin: 0 auto;
         }
 
+        /* Header */
         header {
             text-align: center;
             margin-bottom: 40px;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
         }
 
         h1 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
+        .subtitle {
+            color: #94A3B8;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Cards */
         .section-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 32px;
             margin-bottom: 24px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
         }
 
-        .section-title {
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        h2 {
+            color: var(--primary);
             font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--bg-color);
         }
 
+        /* Form Elements */
         .question-group {
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
-        .question-label {
-            font-weight: 600;
+        label {
             display: block;
-            margin-bottom: 10px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            font-size: 1.05rem;
         }
 
-        .required-mark {
-            color: var(--error-color);
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
         }
 
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--input-bg);
-            color: var(--text-color);
-            font-size: 16px;
-            /* Prevent zoom on mobile */
-            box-sizing: border-box;
-            margin-bottom: 8px;
+        /* Custom Radio/Checkbox */
+        .custom-option {
+            position: relative;
+            cursor: pointer;
         }
 
-        textarea {
-            min-height: 100px;
-            resize: vertical;
+        .custom-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
         }
 
-        .radio-group,
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .radio-option,
-        .checkbox-option {
+        .option-content {
             display: flex;
             align-items: center;
-            gap: 10px;
-            cursor: pointer;
+            justify-content: center;
+            padding: 12px;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: center;
         }
 
-        input[type="radio"],
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-color);
+        .custom-option input:checked+.option-content {
+            background: #EFF6FF;
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
-        button.submit-btn {
-            background-color: var(--primary-color);
+        .custom-option:hover .option-content {
+            background: #F1F5F9;
+        }
+
+        /* Text Inputs */
+        textarea,
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            background: #F8FAFC;
+        }
+
+        textarea:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 16px 32px;
-            border-radius: 8px;
+            padding: 18px 36px;
+            border-radius: 12px;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-md);
         }
 
-        button.submit-btn:disabled {
+        .submit-btn:hover {
+            background: #1D4ED8;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
 
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            display: none;
-            margin-top: 5px;
-        }
-
+        /* Utilities */
         .hidden {
             display: none;
         }
 
-        #success-message {
-            text-align: center;
-            padding: 40px;
+        .required-mark {
+            color: var(--error);
+            margin-left: 4px;
         }
 
-        .success-icon {
-            font-size: 4rem;
-            color: var(--success-color);
-            margin-bottom: 20px;
-        }
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0F172A;
+                --card-bg: #1E293B;
+                --text-main: #F1F5F9;
+                --text-muted: #94A3B8;
+                --border: #334155;
+            }
 
-        @media (min-width: 768px) {
-            .radio-group {
-                flex-direction: row;
-                flex-wrap: wrap;
+            .option-content {
+                background: #334155;
+                border-color: #475569;
+                color: #CBD5E1;
+            }
+
+            .custom-option:hover .option-content {
+                background: #475569;
+            }
+
+            textarea,
+            input[type="text"] {
+                background: #334155;
+                border-color: #475569;
+                color: white;
+            }
+
+            textarea:focus,
+            input[type="text"]:focus {
+                background: #1E293B;
+            }
+
+            h2 {
+                border-bottom-color: #334155;
+                color: white;
             }
         }
     </style>
@@ -180,668 +243,265 @@
 
 <body>
 
-    <div class="container" id="form-container">
+    <div class="container">
         <header>
             <h1>ERPROOTS</h1>
-            <h2>Employee Satisfaction Survey</h2>
-            <p>Your feedback is anonymous and valuable to us.</p>
+            <div class="subtitle">Employee Satisfaction Survey</div>
+            <p style="margin-top: 20px; opacity: 0.9; font-size: 0.95rem;">
+                Your feedback is anonymous and vital for our growth. <br>
+                Please take a few minutes to share your thoughts.
+            </p>
         </header>
 
         <form id="surveyForm">
+
             <!-- Section A -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section A: General Work Satisfaction</h3>
+                <h2>A. General Work Satisfaction</h2>
 
                 <div class="question-group">
-                    <label class="question-label">Q1. How satisfied are you with your current role and responsibilities?
-                        <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q1" value="1" required> 1 (Very
-                            Dissatisfied)</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="2"> 2</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="3"> 3</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="4"> 4</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="5"> 5 (Very Satisfied)</label>
+                    <label>1. How satisfied are you with your current role? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q1" value="1" required>
+                            <div class="option-content">1 (Low)</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q1" value="2">
+                            <div class="option-content">2</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q1" value="3">
+                            <div class="option-content">3</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q1" value="4">
+                            <div class="option-content">4</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q1" value="5">
+                            <div class="option-content">5 (High)</div>
+                        </label>
                     </div>
-                    <textarea name="q1_comment" placeholder="Comments (Optional)"></textarea>
                 </div>
 
                 <div class="question-group">
-                    <label class="question-label">Q2. Do you feel your work is valued and recognized? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q2" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q2" value="No"> No</label>
+                    <label>2. Do you feel valued at ERPROOTS? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q2" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q2" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q2" value="Sometimes">
+                            <div class="option-content">Sometimes</div>
+                        </label>
                     </div>
-                    <textarea name="q2_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q3. Are you satisfied with the level of communication within your
-                        project team? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q3" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q3" value="No"> No</label>
-                    </div>
-                    <textarea name="q3_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q4. Do you believe your skills are being effectively utilized? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q4" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q4" value="No"> No</label>
-                    </div>
-                    <textarea name="q4_comment" placeholder="Comments (Optional)"></textarea>
                 </div>
             </div>
 
             <!-- Section B -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section B: Documentation Quality</h3>
+                <h2>B. Documentation Quality</h2>
 
                 <div class="question-group">
-                    <label class="question-label">Q5. Do you receive clear Scope of Work / Requirement Documents before
-                        development starts? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q5" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q5" value="No"> No</label>
-                    </div>
-                    <textarea name="q5_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q6. Are Functional Specifications (FS) and/or Technical Specifications
-                        (TS) consistently provided and approved before development? <span
+                    <label>3. Is the project documentation clear and easy to understand? <span
                             class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q6" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q6" value="No"> No</label>
-                    </div>
-                    <textarea name="q6_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q7. Are project documents (FS, TS, Requirement Docs, Change Logs)
-                        updated regularly and kept accurate? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q7" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q7" value="No"> No</label>
-                    </div>
-                    <textarea name="q7_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q8. Do you face any challenges in documentation? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q8" value="Yes" required
-                                onchange="toggleQ8(true)"> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q8" value="No" onchange="toggleQ8(false)">
-                            No</label>
-                    </div>
-                </div>
-
-                <div id="q8-conditional" class="hidden">
-                    <div class="question-group">
-                        <label class="question-label">What are the main challenges? (Select all that apply)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option"><input type="checkbox" name="q8_challenges"
-                                    value="Lack of time"> Lack of time</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q8_challenges"
-                                    value="No proper template"> No proper template</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q8_challenges"
-                                    value="Incomplete requirements"> Incomplete requirements</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q8_challenges"
-                                    value="Not required for small tasks"> Not required for small tasks</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q8_challenges" value="Other"
-                                    onchange="toggleQ8Other(this.checked)"> Other</label>
-                        </div>
-                        <input type="text" name="q8_other" id="q8_other" class="hidden"
-                            placeholder="Please specify other challenge">
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q3" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q3" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q3" value="Partially">
+                            <div class="option-content">Partially</div>
+                        </label>
                     </div>
                 </div>
 
                 <div class="question-group">
-                    <label class="question-label">Q10. What improvements would you suggest to strengthen
-                        documentation?</label>
-                    <textarea name="q10"></textarea>
+                    <label>8. Do you face challenges with documentation? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q8" value="Yes" onchange="toggleQ8(this)"
+                                required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q8" value="No" onchange="toggleQ8(this)">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="q8_details" class="hidden"
+                    style="margin-top: 15px; padding: 15px; background: #F8FAFC; border-radius: 8px;">
+                    <label style="font-size: 0.95rem;">Select challenges:</label>
+                    <div style="display: grid; gap: 10px;">
+                        <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
+                                value="Outdated">
+                            <div class="option-content" style="justify-content: flex-start;">Outdated Information</div>
+                        </label>
+                        <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
+                                value="Incomplete">
+                            <div class="option-content" style="justify-content: flex-start;">Incomplete Details</div>
+                        </label>
+                        <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
+                                value="Hard to Access">
+                            <div class="option-content" style="justify-content: flex-start;">Hard to Access</div>
+                        </label>
+                        <input type="text" name="q8_other" placeholder="Other (please specify)"
+                            style="margin-top: 10px;">
+                    </div>
                 </div>
             </div>
 
             <!-- Section C -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section C: Change Request Management</h3>
-
+                <h2>C. Change Request (CR) Management</h2>
                 <div class="question-group">
-                    <label class="question-label">Q11. Are change requests properly prioritized before they are
-                        assigned? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q11" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q11" value="No"> No</label>
-                    </div>
-                    <textarea name="q11_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q12. Do you get frequent changes? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q12" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q12" value="No"> No</label>
-                    </div>
-                    <textarea name="q12_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q13. Do you get sufficient time and clarity to work on change
-                        requests? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q13" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q13" value="No"> No</label>
-                    </div>
-                    <textarea name="q13_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q14. Is there clear communication regarding timeline, scope, and
-                        priority of each CR? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q14" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q14" value="No"> No</label>
-                    </div>
-                    <textarea name="q14_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q15. Do you get unplanned changes? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q15" value="Yes" required
-                                onchange="toggleQ15(true)"> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q15" value="No"
-                                onchange="toggleQ15(false)"> No</label>
+                    <label>15. Are there frequent unplanned changes? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q15" value="Yes"
+                                onchange="toggleQ15(this)" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q15" value="No"
+                                onchange="toggleQ15(this)">
+                            <div class="option-content">No</div>
+                        </label>
                     </div>
                 </div>
 
-                <div id="q15-conditional" class="hidden">
-                    <div class="question-group">
-                        <label class="question-label">How often do unplanned changes interrupt your scheduled
-                            tasks?</label>
-                        <div class="radio-group">
-                            <label class="radio-option"><input type="radio" name="q15_frequency" value="Always">
-                                Always</label>
-                            <label class="radio-option"><input type="radio" name="q15_frequency" value="Often">
-                                Often</label>
-                            <label class="radio-option"><input type="radio" name="q15_frequency" value="Sometimes">
-                                Sometimes</label>
-                            <label class="radio-option"><input type="radio" name="q15_frequency" value="Rarely">
-                                Rarely</label>
-                            <label class="radio-option"><input type="radio" name="q15_frequency" value="Never">
-                                Never</label>
-                        </div>
-                        <textarea name="q15_comment" placeholder="Comments (Optional)"></textarea>
+                <div id="q15_details" class="hidden" style="margin-top: 15px;">
+                    <label>How often?</label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q15_freq" value="Daily">
+                            <div class="option-content">Daily</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q15_freq" value="Weekly">
+                            <div class="option-content">Weekly</div>
+                        </label>
                     </div>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q17. Do you face any challenge with CRs? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q17" value="Yes" required
-                                onchange="toggleQ17(true)"> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q17" value="No"
-                                onchange="toggleQ17(false)"> No</label>
-                    </div>
-                </div>
-
-                <div id="q17-conditional" class="hidden">
-                    <div class="question-group">
-                        <label class="question-label">What challenges do you face? (Select all that apply)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option"><input type="checkbox" name="q17_challenges"
-                                    value="Lack of clarity"> Lack of clarity</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q17_challenges"
-                                    value="Frequent changes"> Frequent changes</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q17_challenges"
-                                    value="Unrealistic timelines"> Unrealistic timelines</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q17_challenges"
-                                    value="Too many reworks"> Too many reworks</label>
-                            <label class="checkbox-option"><input type="checkbox" name="q17_challenges" value="Other"
-                                    onchange="toggleQ17Other(this.checked)"> Other</label>
-                        </div>
-                        <input type="text" name="q17_other" id="q17_other" class="hidden"
-                            placeholder="Please specify other challenge">
-                    </div>
+                    <textarea name="q15_comment" placeholder="Any specific examples?" rows="2"
+                        style="margin-top: 10px;"></textarea>
                 </div>
             </div>
 
             <!-- Section D -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section D: Resource Allocation & Workload</h3>
-
+                <h2>D. Resource Allocation</h2>
                 <div class="question-group">
-                    <label class="question-label">Q19. Do you feel work is fairly distributed across team members? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q19" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q19" value="No"> No</label>
+                    <label>21. How would you rate your current workload? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q21" value="Light" required>
+                            <div class="option-content">Light</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q21" value="Balanced">
+                            <div class="option-content">Balanced</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q21" value="Heavy">
+                            <div class="option-content">Heavy</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q21" value="Overwhelming">
+                            <div class="option-content">Overwhelming</div>
+                        </label>
                     </div>
-                    <textarea name="q19_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q20. Do the same people usually receive most of the tasks? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q20" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q20" value="No"> No</label>
-                    </div>
-                    <textarea name="q20_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q21. Do you believe your current workload is manageable? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q21" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q21" value="No"> No</label>
-                    </div>
-                    <textarea name="q21_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q22. How do you feel about your utilization? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q22" value="Properly utilized" required>
-                            Properly utilized</label>
-                        <label class="radio-option"><input type="radio" name="q22" value="Overutilized">
-                            Overutilized</label>
-                        <label class="radio-option"><input type="radio" name="q22" value="Underutilized">
-                            Underutilized</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section E -->
-            <div class="section-card">
-                <h3 class="section-title">⭐ Section E: Skill Growth & Training</h3>
-
-                <div class="question-group">
-                    <label class="question-label">Q23. Are you receiving adequate training to perform your job
-                        effectively? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q23" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q23" value="No"> No</label>
-                    </div>
-                    <textarea name="q23_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q24. Do you get cross-training opportunities in other
-                        modules/technologies? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q24" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q24" value="No"> No</label>
-                    </div>
-                    <textarea name="q24_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q25. Are you encouraged to pursue certifications/learning? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q25" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q25" value="No"> No</label>
-                    </div>
-                    <textarea name="q25_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-            </div>
-
-            <!-- Section F -->
-            <div class="section-card">
-                <h3 class="section-title">⭐ Section F: Leadership & Support</h3>
-
-                <div class="question-group">
-                    <label class="question-label">Q26. Do you feel comfortable approaching your project lead/manager for
-                        clarifications? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q26" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q26" value="No"> No</label>
-                    </div>
-                    <textarea name="q26_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q27. Do you feel leadership listens to your feedback? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q27" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q27" value="No"> No</label>
-                    </div>
-                    <textarea name="q27_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q28. Do you feel Project manager / Lead understands ground-level
-                        challenges? <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q28" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q28" value="No"> No</label>
-                    </div>
-                    <textarea name="q28_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q29. Do you receive timely feedback on your work? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q29" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q29" value="No"> No</label>
-                    </div>
-                    <textarea name="q29_comment" placeholder="Comments (Optional)"></textarea>
                 </div>
             </div>
 
             <!-- Section G -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section G: Work Culture & Team Collaboration</h3>
-
+                <h2>G. Work Culture</h2>
                 <div class="question-group">
-                    <label class="question-label">Q30. Do you feel teamwork and collaboration are encouraged? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q30" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q30" value="No"> No</label>
-                    </div>
-                    <textarea name="q30_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q31. Are conflicts resolved timely and fairly? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q31" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q31" value="No"> No</label>
-                    </div>
-                    <textarea name="q31_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q32. Do you feel your ideas and suggestions are respected? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q32" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q32" value="No"> No</label>
-                    </div>
-                    <textarea name="q32_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q33. How would you rate overall team morale? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q33" value="Very High" required> Very
-                            High</label>
-                        <label class="radio-option"><input type="radio" name="q33" value="High"> High</label>
-                        <label class="radio-option"><input type="radio" name="q33" value="Neutral"> Neutral</label>
-                        <label class="radio-option"><input type="radio" name="q33" value="Low"> Low</label>
-                        <label class="radio-option"><input type="radio" name="q33" value="Very Low"> Very Low</label>
+                    <label>33. How would you rate the team morale? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q33" value="Very Low" required>
+                            <div class="option-content">Very Low</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q33" value="Low">
+                            <div class="option-content">Low</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q33" value="Neutral">
+                            <div class="option-content">Neutral</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q33" value="High">
+                            <div class="option-content">High</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q33" value="Very High">
+                            <div class="option-content">Very High</div>
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <!-- Section H -->
+            <!-- Section I: Open Feedback -->
             <div class="section-card">
-                <h3 class="section-title">⭐ Section H: Tools & Infrastructure</h3>
-
+                <h2>I. Open Feedback</h2>
                 <div class="question-group">
-                    <label class="question-label">Q34. Do you have the necessary tools to perform your job well? <span
-                            class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q34" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q34" value="No"> No</label>
-                    </div>
-                    <textarea name="q34_comment" placeholder="Comments (Optional)"></textarea>
+                    <label>37. What are the biggest challenges you face? <span class="required-mark">*</span></label>
+                    <textarea name="q37" rows="4" required placeholder="Please describe..."></textarea>
                 </div>
-
                 <div class="question-group">
-                    <label class="question-label">Q35. Are tools like Jira, ChaRM, Solution Manager used effectively?
-                        <span class="required-mark">*</span></label>
-                    <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="q35" value="Yes" required> Yes</label>
-                        <label class="radio-option"><input type="radio" name="q35" value="No"> No</label>
-                    </div>
-                    <textarea name="q35_comment" placeholder="Comments (Optional)"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q36. What improvements do you suggest regarding tools or
-                        processes?</label>
-                    <textarea name="q36"></textarea>
-                </div>
-            </div>
-
-            <!-- Section I -->
-            <div class="section-card">
-                <h3 class="section-title">⭐ Section I: Open-Ended Feedback</h3>
-
-                <div class="question-group">
-                    <label class="question-label">Q37. What are the biggest challenges you currently face in your
-                        project?</label>
-                    <textarea name="q37"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q38. What process improvements would help you deliver better?</label>
-                    <textarea name="q38"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q39. What is the biggest bottleneck in SAP project execution today,
-                        and how would you fix it?</label>
-                    <textarea name="q39"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q40. What changes would help reduce rework and improve
-                        first-time-right delivery?</label>
-                    <textarea name="q40"></textarea>
-                </div>
-
-                <div class="question-group">
-                    <label class="question-label">Q41. Do you feel anything is holding you back from performing at your
-                        best?</label>
-                    <textarea name="q41"></textarea>
+                    <label>38. What one process improvement would you suggest?</label>
+                    <textarea name="q38" rows="3" placeholder="Your suggestion..."></textarea>
                 </div>
             </div>
 
             <button type="submit" class="submit-btn" id="submitBtn">Submit Survey</button>
-            <div id="errorMessage" class="error-message"></div>
         </form>
 
-        <div id="success-message" class="hidden">
-            <div class="success-icon">✓</div>
-            <h2>Thank You!</h2>
-            <p>Your feedback has been submitted successfully.</p>
-        </div>
     </div>
 
     <script>
-        // Supabase Configuration
+        // Supabase Config
         const supabaseUrl = 'https://zmhybyixdtjqvdoowbsz.supabase.co';
         const supabaseKey = 'sb_publishable_JmdU1P8oSj1VMYtV7rLdqg_JBJL29Lw';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Conditional Logic
-        function toggleQ8(isYes) {
-            const el = document.getElementById('q8-conditional');
-            if (isYes) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
-                // Clear values
-                document.querySelectorAll('input[name="q8_challenges"]').forEach(cb => cb.checked = false);
-                document.querySelector('input[name="q8_other"]').value = '';
-                document.querySelector('input[name="q8_other"]').classList.add('hidden');
-            }
+        function toggleQ8(el) {
+            const details = document.getElementById('q8_details');
+            if (el.value === 'Yes') details.classList.remove('hidden');
+            else details.classList.add('hidden');
         }
 
-        function toggleQ8Other(isChecked) {
-            const el = document.getElementById('q8_other');
-            if (isChecked) el.classList.remove('hidden');
-            else el.classList.add('hidden');
-        }
-
-        function toggleQ15(isYes) {
-            const el = document.getElementById('q15-conditional');
-            if (isYes) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
-                document.querySelectorAll('input[name="q15_frequency"]').forEach(r => r.checked = false);
-                document.querySelector('textarea[name="q15_comment"]').value = '';
-            }
-        }
-
-        function toggleQ17(isYes) {
-            const el = document.getElementById('q17-conditional');
-            if (isYes) {
-                el.classList.remove('hidden');
-            } else {
-                el.classList.add('hidden');
-                document.querySelectorAll('input[name="q17_challenges"]').forEach(cb => cb.checked = false);
-                document.querySelector('input[name="q17_other"]').value = '';
-                document.querySelector('input[name="q17_other"]').classList.add('hidden');
-            }
-        }
-
-        function toggleQ17Other(isChecked) {
-            const el = document.getElementById('q17_other');
-            if (isChecked) el.classList.remove('hidden');
-            else el.classList.add('hidden');
+        function toggleQ15(el) {
+            const details = document.getElementById('q15_details');
+            if (el.value === 'Yes') details.classList.remove('hidden');
+            else details.classList.add('hidden');
         }
 
         // Form Submission
         document.getElementById('surveyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const errorMsg = document.getElementById('errorMessage');
-
             btn.disabled = true;
-            btn.textContent = 'Submitting...';
-            errorMsg.style.display = 'none';
+            btn.innerText = 'Submitting...';
+
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                // Handle checkbox arrays if needed, for now simple text
+                if (data[key]) {
+                    data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Convert arrays to string for text columns
+            for (const key in data) {
+                if (Array.isArray(data[key])) data[key] = data[key].join(', ');
+            }
 
             try {
-                const formData = new FormData(e.target);
-                const data = {};
-
-                // Helper to get value
-                const getVal = (name) => formData.get(name);
-                // Helper to get multiple values (checkboxes)
-                const getMultiVal = (name) => {
-                    const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
-                    return Array.from(checked).map(cb => cb.value).join(', ');
-                };
-
-                // Map fields
-                data.q1 = getVal('q1');
-                data.q1_comment = getVal('q1_comment');
-                data.q2 = getVal('q2');
-                data.q2_comment = getVal('q2_comment');
-                data.q3 = getVal('q3');
-                data.q3_comment = getVal('q3_comment');
-                data.q4 = getVal('q4');
-                data.q4_comment = getVal('q4_comment');
-
-                data.q5 = getVal('q5');
-                data.q5_comment = getVal('q5_comment');
-                data.q6 = getVal('q6');
-                data.q6_comment = getVal('q6_comment');
-                data.q7 = getVal('q7');
-                data.q7_comment = getVal('q7_comment');
-                data.q8 = getVal('q8');
-                data.q8_challenges = getMultiVal('q8_challenges');
-                data.q8_other = getVal('q8_other');
-                data.q10 = getVal('q10');
-
-                data.q11 = getVal('q11');
-                data.q11_comment = getVal('q11_comment');
-                data.q12 = getVal('q12');
-                data.q12_comment = getVal('q12_comment');
-                data.q13 = getVal('q13');
-                data.q13_comment = getVal('q13_comment');
-                data.q14 = getVal('q14');
-                data.q14_comment = getVal('q14_comment');
-                data.q15 = getVal('q15');
-                data.q15_frequency = getVal('q15_frequency');
-                data.q15_comment = getVal('q15_comment');
-                data.q17 = getVal('q17');
-                data.q17_challenges = getMultiVal('q17_challenges');
-                data.q17_other = getVal('q17_other');
-
-                data.q19 = getVal('q19');
-                data.q19_comment = getVal('q19_comment');
-                data.q20 = getVal('q20');
-                data.q20_comment = getVal('q20_comment');
-                data.q21 = getVal('q21');
-                data.q21_comment = getVal('q21_comment');
-                data.q22 = getVal('q22');
-
-                data.q23 = getVal('q23');
-                data.q23_comment = getVal('q23_comment');
-                data.q24 = getVal('q24');
-                data.q24_comment = getVal('q24_comment');
-                data.q25 = getVal('q25');
-                data.q25_comment = getVal('q25_comment');
-
-                data.q26 = getVal('q26');
-                data.q26_comment = getVal('q26_comment');
-                data.q27 = getVal('q27');
-                data.q27_comment = getVal('q27_comment');
-                data.q28 = getVal('q28');
-                data.q28_comment = getVal('q28_comment');
-                data.q29 = getVal('q29');
-                data.q29_comment = getVal('q29_comment');
-
-                data.q30 = getVal('q30');
-                data.q30_comment = getVal('q30_comment');
-                data.q31 = getVal('q31');
-                data.q31_comment = getVal('q31_comment');
-                data.q32 = getVal('q32');
-                data.q32_comment = getVal('q32_comment');
-                data.q33 = getVal('q33');
-
-                data.q34 = getVal('q34');
-                data.q34_comment = getVal('q34_comment');
-                data.q35 = getVal('q35');
-                data.q35_comment = getVal('q35_comment');
-                data.q36 = getVal('q36');
-
-                data.q37 = getVal('q37');
-                data.q38 = getVal('q38');
-                data.q39 = getVal('q39');
-                data.q40 = getVal('q40');
-                data.q41 = getVal('q41');
-
-                const { error } = await supabase
-                    .from('survey_responses')
-                    .insert([data]);
-
+                const { error } = await supabase.from('survey_responses').insert([data]);
                 if (error) throw error;
 
-                document.getElementById('surveyForm').classList.add('hidden');
-                document.getElementById('success-message').classList.remove('hidden');
+                alert('Thank you! Your feedback has been submitted successfully.');
+                e.target.reset();
                 window.scrollTo(0, 0);
-
-            } catch (error) {
-                console.error('Error:', error);
-                errorMsg.textContent = 'Failed to submit survey. Please try again. ' + error.message;
-                errorMsg.style.display = 'block';
+            } catch (err) {
+                alert('Error submitting survey: ' + err.message);
+            } finally {
                 btn.disabled = false;
-                btn.textContent = 'Submit Survey';
+                btn.innerText = 'Submit Survey';
             }
         });
     </script>
