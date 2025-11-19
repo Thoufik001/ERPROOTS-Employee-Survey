@@ -44,24 +44,6 @@
             background: white;
             padding: 2rem;
             border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        /* Dashboard */
-        #dashboard {
-            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -295,26 +277,6 @@
         const SUPABASE_KEY = 'sb_publishable_JmdU1P8oSj1VMYtV7rLdqg_JBJL29Lw';
         const GEMINI_KEY = 'AIzaSyDa5zUB4OS9Jndr7oJ7Sil4IGUhB64yYKQ';
         const APP_PASSWORD = 'Erproots@2017';
-
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        let allResponses = [];
-
-        // Global functions for HTML access
-        window.checkPassword = function () {
-            const input = document.getElementById('passwordInput').value;
-            if (input === APP_PASSWORD) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                loadData();
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-            }
-        }
-
-        window.logout = function () {
-            location.reload();
-        }
-
         window.exportCSV = function () {
             if (!allResponses.length) return;
 
