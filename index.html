@@ -152,6 +152,7 @@
             transition: all 0.2s;
             box-sizing: border-box;
             background: #F8FAFC;
+            margin-top: 8px;
         }
 
         textarea:focus,
@@ -278,10 +279,11 @@
                             <div class="option-content">5 (High)</div>
                         </label>
                     </div>
+                    <textarea name="q1_comment" placeholder="Comments (Optional)" rows="2"></textarea>
                 </div>
 
                 <div class="question-group">
-                    <label>2. Do you feel valued at ERPROOTS? <span class="required-mark">*</span></label>
+                    <label>2. Do you feel your work is valued? <span class="required-mark">*</span></label>
                     <div class="options-grid">
                         <label class="custom-option"><input type="radio" name="q2" value="Yes" required>
                             <div class="option-content">Yes</div>
@@ -289,10 +291,34 @@
                         <label class="custom-option"><input type="radio" name="q2" value="No">
                             <div class="option-content">No</div>
                         </label>
-                        <label class="custom-option"><input type="radio" name="q2" value="Sometimes">
-                            <div class="option-content">Sometimes</div>
+                    </div>
+                    <textarea name="q2_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>3. Are you satisfied with team communication? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q3" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q3" value="No">
+                            <div class="option-content">No</div>
                         </label>
                     </div>
+                    <textarea name="q3_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>4. Are your skills effectively utilized? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q4" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q4" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q4_comment" placeholder="Comments (Optional)" rows="2"></textarea>
                 </div>
             </div>
 
@@ -301,19 +327,44 @@
                 <h2>B. Documentation Quality</h2>
 
                 <div class="question-group">
-                    <label>3. Is the project documentation clear and easy to understand? <span
+                    <label>5. Do you receive clear Scope/Requirement Documents? <span
                             class="required-mark">*</span></label>
                     <div class="options-grid">
-                        <label class="custom-option"><input type="radio" name="q3" value="Yes" required>
+                        <label class="custom-option"><input type="radio" name="q5" value="Yes" required>
                             <div class="option-content">Yes</div>
                         </label>
-                        <label class="custom-option"><input type="radio" name="q3" value="No">
+                        <label class="custom-option"><input type="radio" name="q5" value="No">
                             <div class="option-content">No</div>
                         </label>
-                        <label class="custom-option"><input type="radio" name="q3" value="Partially">
-                            <div class="option-content">Partially</div>
+                    </div>
+                    <textarea name="q5_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>6. Are FS/TS provided and approved before development? <span
+                            class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q6" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q6" value="No">
+                            <div class="option-content">No</div>
                         </label>
                     </div>
+                    <textarea name="q6_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>7. Are project documents updated regularly? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q7" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q7" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q7_comment" placeholder="Comments (Optional)" rows="2"></textarea>
                 </div>
 
                 <div class="question-group">
@@ -334,28 +385,91 @@
                     <label style="font-size: 0.95rem;">Select challenges:</label>
                     <div style="display: grid; gap: 10px;">
                         <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
-                                value="Outdated">
-                            <div class="option-content" style="justify-content: flex-start;">Outdated Information</div>
+                                value="Lack of time">
+                            <div class="option-content" style="justify-content: flex-start;">Lack of time</div>
                         </label>
                         <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
-                                value="Incomplete">
-                            <div class="option-content" style="justify-content: flex-start;">Incomplete Details</div>
+                                value="No proper template">
+                            <div class="option-content" style="justify-content: flex-start;">No proper template</div>
                         </label>
                         <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
-                                value="Hard to Access">
-                            <div class="option-content" style="justify-content: flex-start;">Hard to Access</div>
+                                value="Incomplete requirements">
+                            <div class="option-content" style="justify-content: flex-start;">Incomplete requirements
+                            </div>
                         </label>
-                        <input type="text" name="q8_other" placeholder="Other (please specify)"
-                            style="margin-top: 10px;">
+                        <label class="custom-option" style="display: block;"><input type="checkbox" name="q8_challenges"
+                                value="Not required for small tasks">
+                            <div class="option-content" style="justify-content: flex-start;">Not required for small
+                                tasks</div>
+                        </label>
+                        <input type="text" name="q8_other" placeholder="Other (please specify)">
                     </div>
+                </div>
+
+                <div class="question-group">
+                    <label>10. What improvements would you suggest for documentation?</label>
+                    <textarea name="q10" rows="2"></textarea>
                 </div>
             </div>
 
             <!-- Section C -->
             <div class="section-card">
                 <h2>C. Change Request (CR) Management</h2>
+
                 <div class="question-group">
-                    <label>15. Are there frequent unplanned changes? <span class="required-mark">*</span></label>
+                    <label>11. Are CRs properly prioritized? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q11" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q11" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q11_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>12. Do you get frequent changes? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q12" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q12" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q12_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>13. Do you get sufficient time/clarity for CRs? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q13" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q13" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q13_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>14. Is communication regarding CRs clear? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q14" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q14" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q14_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>15. Do you get unplanned changes? <span class="required-mark">*</span></label>
                     <div class="options-grid">
                         <label class="custom-option"><input type="radio" name="q15" value="Yes"
                                 onchange="toggleQ15(this)" required>
@@ -371,45 +485,268 @@
                 <div id="q15_details" class="hidden" style="margin-top: 15px;">
                     <label>How often?</label>
                     <div class="options-grid">
-                        <label class="custom-option"><input type="radio" name="q15_freq" value="Daily">
-                            <div class="option-content">Daily</div>
+                        <label class="custom-option"><input type="radio" name="q15_frequency" value="Always">
+                            <div class="option-content">Always</div>
                         </label>
-                        <label class="custom-option"><input type="radio" name="q15_freq" value="Weekly">
-                            <div class="option-content">Weekly</div>
+                        <label class="custom-option"><input type="radio" name="q15_frequency" value="Often">
+                            <div class="option-content">Often</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q15_frequency" value="Sometimes">
+                            <div class="option-content">Sometimes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q15_frequency" value="Rarely">
+                            <div class="option-content">Rarely</div>
                         </label>
                     </div>
-                    <textarea name="q15_comment" placeholder="Any specific examples?" rows="2"
-                        style="margin-top: 10px;"></textarea>
+                    <textarea name="q15_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>17. Do you face challenges with CRs? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q17" value="Yes"
+                                onchange="toggleQ17(this)" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q17" value="No"
+                                onchange="toggleQ17(this)">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="q17_details" class="hidden"
+                    style="margin-top: 15px; padding: 15px; background: #F8FAFC; border-radius: 8px;">
+                    <label>Select challenges:</label>
+                    <div style="display: grid; gap: 10px;">
+                        <label class="custom-option" style="display: block;"><input type="checkbox"
+                                name="q17_challenges" value="Lack of clarity">
+                            <div class="option-content" style="justify-content: flex-start;">Lack of clarity</div>
+                        </label>
+                        <label class="custom-option" style="display: block;"><input type="checkbox"
+                                name="q17_challenges" value="Frequent changes">
+                            <div class="option-content" style="justify-content: flex-start;">Frequent changes</div>
+                        </label>
+                        <label class="custom-option" style="display: block;"><input type="checkbox"
+                                name="q17_challenges" value="Unrealistic timelines">
+                            <div class="option-content" style="justify-content: flex-start;">Unrealistic timelines</div>
+                        </label>
+                        <label class="custom-option" style="display: block;"><input type="checkbox"
+                                name="q17_challenges" value="Too many reworks">
+                            <div class="option-content" style="justify-content: flex-start;">Too many reworks</div>
+                        </label>
+                        <input type="text" name="q17_other" placeholder="Other (please specify)">
+                    </div>
                 </div>
             </div>
 
             <!-- Section D -->
             <div class="section-card">
                 <h2>D. Resource Allocation</h2>
+
                 <div class="question-group">
-                    <label>21. How would you rate your current workload? <span class="required-mark">*</span></label>
+                    <label>19. Is work fairly distributed? <span class="required-mark">*</span></label>
                     <div class="options-grid">
-                        <label class="custom-option"><input type="radio" name="q21" value="Light" required>
-                            <div class="option-content">Light</div>
+                        <label class="custom-option"><input type="radio" name="q19" value="Yes" required>
+                            <div class="option-content">Yes</div>
                         </label>
-                        <label class="custom-option"><input type="radio" name="q21" value="Balanced">
-                            <div class="option-content">Balanced</div>
-                        </label>
-                        <label class="custom-option"><input type="radio" name="q21" value="Heavy">
-                            <div class="option-content">Heavy</div>
-                        </label>
-                        <label class="custom-option"><input type="radio" name="q21" value="Overwhelming">
-                            <div class="option-content">Overwhelming</div>
+                        <label class="custom-option"><input type="radio" name="q19" value="No">
+                            <div class="option-content">No</div>
                         </label>
                     </div>
+                    <textarea name="q19_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>20. Do the same people usually receive most tasks? <span
+                            class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q20" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q20" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q20_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>21. Is your workload manageable? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q21" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q21" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q21_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>22. How do you feel about your utilization? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q22" value="Properly utilized" required>
+                            <div class="option-content">Properly utilized</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q22" value="Overutilized">
+                            <div class="option-content">Overutilized</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q22" value="Underutilized">
+                            <div class="option-content">Underutilized</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section E -->
+            <div class="section-card">
+                <h2>E. Skill Growth & Training</h2>
+
+                <div class="question-group">
+                    <label>23. Are you receiving adequate training? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q23" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q23" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q23_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>24. Do you get cross-training opportunities? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q24" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q24" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q24_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>25. Are you encouraged to pursue certifications? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q25" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q25" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q25_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+            </div>
+
+            <!-- Section F -->
+            <div class="section-card">
+                <h2>F. Leadership & Support</h2>
+
+                <div class="question-group">
+                    <label>26. Comfortable approaching manager/lead? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q26" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q26" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q26_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>27. Does leadership listen to feedback? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q27" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q27" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q27_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>28. Does manager understand ground-level challenges? <span
+                            class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q28" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q28" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q28_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>29. Do you receive timely feedback? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q29" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q29" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q29_comment" placeholder="Comments (Optional)" rows="2"></textarea>
                 </div>
             </div>
 
             <!-- Section G -->
             <div class="section-card">
                 <h2>G. Work Culture</h2>
+
                 <div class="question-group">
-                    <label>33. How would you rate the team morale? <span class="required-mark">*</span></label>
+                    <label>30. Is teamwork encouraged? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q30" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q30" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q30_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>31. Are conflicts resolved fairly? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q31" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q31" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q31_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>32. Are your ideas respected? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q32" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q32" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q32_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>33. How would you rate team morale? <span class="required-mark">*</span></label>
                     <div class="options-grid">
                         <label class="custom-option"><input type="radio" name="q33" value="Very Low" required>
                             <div class="option-content">Very Low</div>
@@ -430,16 +767,64 @@
                 </div>
             </div>
 
+            <!-- Section H -->
+            <div class="section-card">
+                <h2>H. Tools & Infrastructure</h2>
+
+                <div class="question-group">
+                    <label>34. Do you have necessary tools? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q34" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q34" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q34_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>35. Are tools (Jira, ChaRM) used effectively? <span class="required-mark">*</span></label>
+                    <div class="options-grid">
+                        <label class="custom-option"><input type="radio" name="q35" value="Yes" required>
+                            <div class="option-content">Yes</div>
+                        </label>
+                        <label class="custom-option"><input type="radio" name="q35" value="No">
+                            <div class="option-content">No</div>
+                        </label>
+                    </div>
+                    <textarea name="q35_comment" placeholder="Comments (Optional)" rows="2"></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>36. Suggestions for tools/processes?</label>
+                    <textarea name="q36" rows="2"></textarea>
+                </div>
+            </div>
+
             <!-- Section I: Open Feedback -->
             <div class="section-card">
                 <h2>I. Open Feedback</h2>
                 <div class="question-group">
-                    <label>37. What are the biggest challenges you face? <span class="required-mark">*</span></label>
-                    <textarea name="q37" rows="4" required placeholder="Please describe..."></textarea>
+                    <label>37. Biggest challenges you face?</label>
+                    <textarea name="q37" rows="3"></textarea>
                 </div>
                 <div class="question-group">
-                    <label>38. What one process improvement would you suggest?</label>
-                    <textarea name="q38" rows="3" placeholder="Your suggestion..."></textarea>
+                    <label>38. Process improvements suggestions?</label>
+                    <textarea name="q38" rows="3"></textarea>
+                </div>
+                <div class="question-group">
+                    <label>39. Biggest bottleneck in execution?</label>
+                    <textarea name="q39" rows="3"></textarea>
+                </div>
+                <div class="question-group">
+                    <label>40. Changes to reduce rework?</label>
+                    <textarea name="q40" rows="3"></textarea>
+                </div>
+                <div class="question-group">
+                    <label>41. Anything holding you back?</label>
+                    <textarea name="q41" rows="3"></textarea>
                 </div>
             </div>
 
@@ -467,6 +852,12 @@
             else details.classList.add('hidden');
         }
 
+        function toggleQ17(el) {
+            const details = document.getElementById('q17_details');
+            if (el.value === 'Yes') details.classList.remove('hidden');
+            else details.classList.add('hidden');
+        }
+
         // Form Submission
         document.getElementById('surveyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -477,7 +868,6 @@
             const formData = new FormData(e.target);
             const data = {};
             formData.forEach((value, key) => {
-                // Handle checkbox arrays if needed, for now simple text
                 if (data[key]) {
                     data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];
                 } else {
@@ -497,8 +887,13 @@
                 alert('Thank you! Your feedback has been submitted successfully.');
                 e.target.reset();
                 window.scrollTo(0, 0);
+
+                // Hide details again
+                document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
+
             } catch (err) {
                 alert('Error submitting survey: ' + err.message);
+                console.error(err);
             } finally {
                 btn.disabled = false;
                 btn.innerText = 'Submit Survey';
